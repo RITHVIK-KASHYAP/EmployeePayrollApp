@@ -9,12 +9,8 @@ import com.employeepayroll.PayrollService;
 import com.employeepayroll.Payslip;
 import com.employeeregistration.Employee;
 import com.employeeregistration.UserAccount;
-import com.printpayslip.DownloadToken;
-import com.printpayslip.DownloadablePayslip;
-import com.printpayslip.FileService;
 import com.validation.ValidationException;
 import com.validation.Validator;
-
 
 /*
  * --------------------------------Main Class------------------------------------
@@ -22,12 +18,10 @@ import com.validation.Validator;
  * Entry point of Use Case 4- Print or Download Payslip
  * 
  * Execution Flow:
- * 	1. Create original payslip
- * 	2. Clone payslip for download 
- * 	3. Verify equality and identity
- *  4. Check Download expiry
- *  5. Save payslip to files
- *  6. Print cloned payslip
+ * 	1. Capture employee details 
+ * 	2. Prepare payslip data 
+ * 	3. Select dashboard at runtime
+ *  4. Display dashboard output
  *  
  * @author Rithvik
  * @version 5.0
@@ -38,7 +32,7 @@ import com.validation.Validator;
 public class EmployeePayrollApp {
 	public static void main(String[] args) throws Exception {
 		Scanner scanner = new Scanner(System.in);
-		System.out.println("======USE CASE 4 : PRINT / DOWNLOAD PAY SLIP=======");
+		System.out.println("======USE CASE 5 : DASHBOARD DISPLAY=======");
 
 		try {
 			System.out.println("Enter name: ");
@@ -83,33 +77,6 @@ public class EmployeePayrollApp {
 
 					Payslip payslip = service.generatePayslip(emp, month, basic, hra, da, allowances);
 					System.out.println(payslip);
-					
-		               // === UC4: Print / Download ===
-	                System.out.println("\n=== USE CASE 4: PAYSLIP PRINT / DOWNLOAD ===");
-	                DownloadablePayslip dlPayslip = new DownloadablePayslip(
-	                        payslip.getEmployeeId(), payslip.getEmpName(), payslip.getMonth(), payslip.getNetpay());
-
-	                DownloadablePayslip copy = (DownloadablePayslip) dlPayslip.clone();
-	                System.out.println("Verified: Download copy is equal to original.");
-	                System.out.println("Original hashcode : " + dlPayslip.hashCode());
-	                System.out.println("Cloned   hashcode : " + copy.hashCode());
-
-	                DownloadToken token = new DownloadToken();
-	                if (!token.isExpired()) {
-	                    try {
-	                        FileService fs = new FileService();
-	                        String txtFile = fs.savePayslipAsText(copy);
-	                        String pdfFile = fs.savePayslipAsPdf(copy);
-	                        System.out.println("Payslip Download Successful.");
-	                        System.out.println("Saved as text file: " + txtFile);
-	                        System.out.println("Saved as PDF file : " + pdfFile);
-	                        System.out.println("\n--- Printed Payslip ---\n" + copy);
-	                    } catch (Exception e) {
-	                        System.out.println("Download failed: " + e.getMessage());
-	                    }
-	                } else {
-	                    System.out.println("Download token expired.");
-	                }
 				} else {
 					System.out.println("Session expired.");
 				}
