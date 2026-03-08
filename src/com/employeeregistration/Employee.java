@@ -39,7 +39,7 @@ public class Employee {
 	
 	@Override
 	public String toString() {
-		return "empId: "+ empId+ "name: "+ name + "email: "+ email + "phone: "+ phone;
+		return "empId: "+ empId+ "name: "+ name + "email: "+ email + "phone: "+ phone+"Username: "+account.getLoginId();
 	}
 	
 	public String getEmpId() {
@@ -48,6 +48,9 @@ public class Employee {
 	
 	public String getEmail() {
 		return email;
+	}
+	public String getName() {
+		return name;
 	}
 
 	

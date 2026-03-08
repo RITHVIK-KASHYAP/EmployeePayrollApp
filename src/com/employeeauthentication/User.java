@@ -23,4 +23,3 @@ public abstract class User {
  // Abstract method forces subclasses to define authentication logic
  public abstract boolean authenticate(String username, String password);
 }
-
